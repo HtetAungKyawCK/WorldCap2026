@@ -1,6 +1,6 @@
 export const translations = {
   en: {
-    title: 'World Cup 2026 Hub',
+    title: 'WC26Hub',
     subtitle: 'Fixtures, Standing, History & Live Streaming',
     langToggle: 'မြန်မာစာ',
     navLive: 'Live Matches',
@@ -79,7 +79,7 @@ export const translations = {
     topScorer: 'Golden Boot'
   },
   my: {
-    title: 'ကမ္ဘာ့ဖလား ၂၀၂၆',
+    title: 'WC26Hub',
     subtitle: 'ပွဲစဉ်ဇယားများ၊ အုပ်စုအဆင့်ရပ်တည်မှု၊ ရာဇဝင်မှတ်တမ်းနှင့် Live ကြည့်ရန်',
     langToggle: 'English',
     navLive: 'တိုက်ရိုက်ပွဲစဉ်များ (Live)',

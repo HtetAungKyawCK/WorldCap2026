@@ -69,15 +69,31 @@ export default function Navbar({ activeTab, setActiveTab, language, setLanguage 
             })}
           </nav>
 
-          {/* Language Toggle Button */}
-          <button
-            id="lang-toggle-btn"
-            onClick={toggleLanguage}
-            className="flex items-center gap-1.5 rounded-xl border border-pink-500/20 bg-pink-500/5 px-3.5 py-1.5 text-xs font-bold text-pink-500 hover:text-pink-400 hover:bg-pink-500/10 hover:border-pink-500/40 transition-all duration-200 cursor-pointer"
-          >
-            <Globe className="h-3.5 w-3.5" />
-            {t.langToggle}
-          </button>
+          {/* Language Selector (ENG / MM short format) */}
+          <div id="language-selector" className="flex rounded-xl bg-black/40 p-1 border border-white/5 text-[11px] font-bold">
+            <button
+              id="lang-btn-en"
+              onClick={() => setLanguage('en')}
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                language === 'en'
+                  ? 'bg-gradient-to-r from-pink-500 to-red-500 text-white shadow-md shadow-pink-500/20 font-extrabold'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              ENG
+            </button>
+            <button
+              id="lang-btn-my"
+              onClick={() => setLanguage('my')}
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                language === 'my'
+                  ? 'bg-gradient-to-r from-pink-500 to-red-500 text-white shadow-md shadow-pink-500/20 font-extrabold'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              MM
+            </button>
+          </div>
         </div>
       </div>
 
