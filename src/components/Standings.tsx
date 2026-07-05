@@ -3,6 +3,7 @@ import { Language, GroupStanding } from '../types';
 import { translations } from '../data/translations';
 import { Trophy, Shield, Info, GitMerge, LayoutGrid } from 'lucide-react';
 import TournamentTree from './TournamentTree';
+import Flag from './Flag';
 
 interface StandingsProps {
   language: Language;
@@ -147,7 +148,7 @@ export default function Standings({ language, standings }: StandingsProps) {
                             {/* Team Name */}
                             <td className="py-3 pl-2 flex items-center gap-2 text-white">
                               <span className={`w-1 h-6 shrink-0 rounded-full ${isQualified ? 'bg-pink-500' : 'bg-transparent'}`}></span>
-                              <span className="text-lg leading-none" role="img" aria-label={team.name}>{team.flag}</span>
+                              <Flag country={team.name} emoji={team.flag} size="md" />
                               <span className="font-bold tracking-tight truncate max-w-[110px] sm:max-w-none">
                                 {translateTeam(team.name)}
                               </span>

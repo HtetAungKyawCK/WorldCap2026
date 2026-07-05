@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Language } from '../types';
 import { motion } from 'motion/react';
 import { Trophy, ArrowRight, Sparkles, Star } from 'lucide-react';
+import Flag from './Flag';
 
 interface TournamentTreeProps {
   language: Language;
@@ -207,7 +208,7 @@ export default function TournamentTree({ language }: TournamentTreeProps) {
                     }`}
                   >
                     <div className="flex items-center gap-2 text-xs truncate">
-                      <span className="text-base shrink-0">{match.homeFlag}</span>
+                      <Flag country={match.home} emoji={match.homeFlag} size="sm" />
                       <span className="truncate">{translateTeam(match.home)}</span>
                     </div>
                     <span className="font-mono text-xs font-bold px-1.5 bg-black/40 rounded border border-white/5 text-slate-300">
@@ -224,7 +225,7 @@ export default function TournamentTree({ language }: TournamentTreeProps) {
                     }`}
                   >
                     <div className="flex items-center gap-2 text-xs truncate">
-                      <span className="text-base shrink-0">{match.awayFlag}</span>
+                      <Flag country={match.away} emoji={match.awayFlag} size="sm" />
                       <span className="truncate">{translateTeam(match.away)}</span>
                     </div>
                     <span className="font-mono text-xs font-bold px-1.5 bg-black/40 rounded border border-white/5 text-slate-300">
@@ -279,7 +280,7 @@ export default function TournamentTree({ language }: TournamentTreeProps) {
                     }`}
                   >
                     <div className="flex items-center gap-2 text-xs truncate text-slate-400">
-                      <span className="text-base shrink-0">{match.homeFlag}</span>
+                      <Flag country={match.home} emoji={match.homeFlag} size="sm" />
                       <span className="truncate">{translateTeam(match.home)}</span>
                     </div>
                     <span className="font-mono text-xs font-bold px-1.5 bg-black/40 rounded border border-white/5 text-slate-500">
@@ -296,7 +297,7 @@ export default function TournamentTree({ language }: TournamentTreeProps) {
                     }`}
                   >
                     <div className="flex items-center gap-2 text-xs truncate text-slate-400">
-                      <span className="text-base shrink-0">{match.awayFlag}</span>
+                      <Flag country={match.away} emoji={match.awayFlag} size="sm" />
                       <span className="truncate">{translateTeam(match.away)}</span>
                     </div>
                     <span className="font-mono text-xs font-bold px-1.5 bg-black/40 rounded border border-white/5 text-slate-500">
@@ -344,7 +345,7 @@ export default function TournamentTree({ language }: TournamentTreeProps) {
                     }`}
                   >
                     <div className="flex items-center gap-2 text-xs truncate text-slate-500">
-                      <span className="text-base shrink-0">{match.homeFlag}</span>
+                      <Flag country={match.home} emoji={match.homeFlag} size="sm" />
                       <span className="truncate">{translateTeam(match.home)}</span>
                     </div>
                     <span className="font-mono text-xs font-bold px-1.5 bg-black/40 rounded border border-white/5 text-slate-500">
@@ -361,7 +362,7 @@ export default function TournamentTree({ language }: TournamentTreeProps) {
                     }`}
                   >
                     <div className="flex items-center gap-2 text-xs truncate text-slate-500">
-                      <span className="text-base shrink-0">{match.awayFlag}</span>
+                      <Flag country={match.away} emoji={match.awayFlag} size="sm" />
                       <span className="truncate">{translateTeam(match.away)}</span>
                     </div>
                     <span className="font-mono text-xs font-bold px-1.5 bg-black/40 rounded border border-white/5 text-slate-500">
@@ -407,7 +408,7 @@ export default function TournamentTree({ language }: TournamentTreeProps) {
                   }`}
                 >
                   <div className="flex items-center gap-2 text-xs truncate text-slate-500 font-bold">
-                    <span className="text-base shrink-0">{finalMatch.homeFlag}</span>
+                    <Flag country={finalMatch.home} emoji={finalMatch.homeFlag} size="sm" />
                     <span className="truncate">{translateTeam(finalMatch.home)}</span>
                   </div>
                   <span className="font-mono text-xs font-bold px-1.5 bg-black/40 rounded border border-white/5 text-slate-500">
@@ -424,7 +425,7 @@ export default function TournamentTree({ language }: TournamentTreeProps) {
                   }`}
                 >
                   <div className="flex items-center gap-2 text-xs truncate text-slate-500 font-bold">
-                    <span className="text-base shrink-0">{finalMatch.awayFlag}</span>
+                    <Flag country={finalMatch.away} emoji={finalMatch.awayFlag} size="sm" />
                     <span className="truncate">{translateTeam(finalMatch.away)}</span>
                   </div>
                   <span className="font-mono text-xs font-bold px-1.5 bg-black/40 rounded border border-white/5 text-slate-500">

@@ -12,14 +12,15 @@ import { translations } from './data/translations';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>('live');
-  const [language, setLanguage] = useState<Language>('en'); // Default to English!
+  const [language, setLanguage] = useState<Language>(() => {
+    const saved = localStorage.getItem('wc26_language');
+    return (saved as Language) || 'en';
+  });
 
-  // Auto-set language to English on Lives page
+  // Save language preference when it changes
   useEffect(() => {
-    if (activeTab === 'live') {
-      setLanguage('en');
-    }
-  }, [activeTab]);
+    localStorage.setItem('wc26_language', language);
+  }, [language]);
 
   // Disable Right-Click and View Source Shortcuts
   useEffect(() => {

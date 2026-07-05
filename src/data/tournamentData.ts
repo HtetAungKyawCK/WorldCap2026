@@ -4,6 +4,23 @@ export const matchesData: Match[] = [
   // --- LIVE MATCHES TODAY (JULY 5, 2026) ---
   {
     id: 'live-1',
+    homeTeam: 'Brazil',
+    awayTeam: 'Norway',
+    homeFlag: '🇧🇷',
+    awayFlag: '🇳🇴',
+    homeScore: 0,
+    awayScore: 0,
+    date: '2026-07-06',
+    time: '03:00',
+    stage: 'round_16',
+    status: 'live',
+    stadium: 'Rose Bowl',
+    city: 'Pasadena',
+    minute: 45,
+    scorers: []
+  },
+  {
+    id: 'live-2',
     homeTeam: 'England',
     awayTeam: 'France',
     homeFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
@@ -13,7 +30,7 @@ export const matchesData: Match[] = [
     date: '2026-07-05',
     time: '18:00',
     stage: 'round_16',
-    status: 'upcoming',
+    status: 'live',
     stadium: 'SoFi Stadium',
     city: 'Los Angeles',
     minute: 72,
@@ -22,29 +39,21 @@ export const matchesData: Match[] = [
       { name: 'Kylian Mbappé', time: 52, team: 'away' }
     ]
   },
+
+  // --- UPCOMING MATCHES ---
   {
-    id: 'live-2',
-    homeTeam: 'Brazil',
-    awayTeam: 'United States',
-    homeFlag: '🇧🇷',
-    awayFlag: '🇺🇸',
-    homeScore: 2,
-    awayScore: 1,
-    date: '2026-07-05',
-    time: '21:00',
+    id: 'up-0',
+    homeTeam: 'Mexico',
+    awayTeam: 'England',
+    homeFlag: '🇲🇽',
+    awayFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    date: '2026-07-06',
+    time: '07:00',
     stage: 'round_16',
     status: 'upcoming',
     stadium: 'MetLife Stadium',
-    city: 'East Rutherford',
-    minute: 24,
-    scorers: [
-      { name: 'Vinícius Júnior', time: 8, team: 'home' },
-      { name: 'Christian Pulisic', time: 18, team: 'away' },
-      { name: 'Rodrygo', time: 22, team: 'home' }
-    ]
+    city: 'East Rutherford'
   },
-
-  // --- UPCOMING MATCHES ---
   {
     id: 'up-1',
     homeTeam: 'Portugal',

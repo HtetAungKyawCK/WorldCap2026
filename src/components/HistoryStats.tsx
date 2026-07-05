@@ -3,6 +3,7 @@ import { Language, WorldCupWinner, HistoricalMatchup } from '../types';
 import { translations } from '../data/translations';
 import { Trophy, History, ArrowRightLeft, ShieldAlert, Sparkles, Calendar, CalendarRange } from 'lucide-react';
 import { pastWinnersData, historicalMatchupsData } from '../data/tournamentData';
+import Flag from './Flag';
 
 interface HistoryStatsProps {
   language: Language;
@@ -128,7 +129,7 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
               <div className="sm:col-span-5 space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase">{t.teamA}</label>
                 <div className="flex items-center gap-2 bg-[#040815] border border-white/10 rounded-lg px-3 py-1">
-                  <span className="text-lg leading-none">{getTeamFlag(teamA)}</span>
+                  <Flag country={teamA} emoji={getTeamFlag(teamA)} size="sm" />
                   <select
                     id="h2h-select-team-a"
                     value={teamA}
@@ -157,7 +158,7 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
               <div className="sm:col-span-5 space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase">{t.teamB}</label>
                 <div className="flex items-center gap-2 bg-[#040815] border border-white/10 rounded-lg px-3 py-1">
-                  <span className="text-lg leading-none">{getTeamFlag(teamB)}</span>
+                  <Flag country={teamB} emoji={getTeamFlag(teamB)} size="sm" />
                   <select
                     id="h2h-select-team-b"
                     value={teamB}
@@ -282,7 +283,7 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
                     <div className="flex items-center justify-between text-xs">
                       {/* Champion info */}
                       <span className="text-white font-bold flex items-center gap-1.5">
-                        <span className="text-lg leading-none">{winner.championFlag}</span>
+                        <Flag country={winner.champion} emoji={winner.championFlag} size="sm" />
                         {translateTeam(winner.champion)}
                         <span className="text-pink-400 text-[10px]">👑</span>
                       </span>
@@ -294,7 +295,7 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
 
                       {/* Runner-up */}
                       <span className="text-slate-400 font-semibold flex items-center gap-1.5">
-                        <span className="text-lg leading-none">{winner.runnerUpFlag}</span>
+                        <Flag country={winner.runnerUp} emoji={winner.runnerUpFlag} size="sm" />
                         {translateTeam(winner.runnerUp)}
                       </span>
                     </div>

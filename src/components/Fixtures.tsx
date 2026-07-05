@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Language, Match } from '../types';
 import { translations } from '../data/translations';
 import { Search, Calendar, MapPin, CheckCircle2, Clock, PlayCircle } from 'lucide-react';
+import Flag from './Flag';
 
 interface FixturesProps {
   language: Language;
@@ -211,9 +212,7 @@ export default function Fixtures({ language, matches }: FixturesProps) {
                   <div className="flex items-center justify-between gap-2 my-2 py-1.5">
                     {/* Home Side */}
                     <div className="flex flex-col items-center justify-center flex-1 text-center min-w-[100px]">
-                      <span className="text-3xl leading-none mb-2 filter drop-shadow-md transition-transform group-hover:scale-105" role="img" aria-label={match.homeTeam}>
-                        {match.homeFlag}
-                      </span>
+                      <Flag country={match.homeTeam} emoji={match.homeFlag} size="lg" className="mb-2 scale-110 filter drop-shadow-md transition-transform group-hover:scale-125" />
                       <span className="text-sm font-bold text-white tracking-tight line-clamp-1">
                         {translateTeam(match.homeTeam)}
                       </span>
@@ -240,9 +239,7 @@ export default function Fixtures({ language, matches }: FixturesProps) {
 
                     {/* Away Side */}
                     <div className="flex flex-col items-center justify-center flex-1 text-center min-w-[100px]">
-                      <span className="text-3xl leading-none mb-2 filter drop-shadow-md transition-transform group-hover:scale-105" role="img" aria-label={match.awayTeam}>
-                        {match.awayFlag}
-                      </span>
+                      <Flag country={match.awayTeam} emoji={match.awayFlag} size="lg" className="mb-2 scale-110 filter drop-shadow-md transition-transform group-hover:scale-125" />
                       <span className="text-sm font-bold text-white tracking-tight line-clamp-1">
                         {translateTeam(match.awayTeam)}
                       </span>
