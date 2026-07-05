@@ -109,7 +109,7 @@ export default function Fixtures({ language, matches }: FixturesProps) {
             placeholder={t.searchPlaceholder}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-white/10 bg-white/5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/20 transition-all"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-white/10 bg-white/5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-pink-500/60 focus:ring-1 focus:ring-pink-500/20 transition-all"
           />
         </div>
 
@@ -119,7 +119,7 @@ export default function Fixtures({ language, matches }: FixturesProps) {
             id="stage-filter-select"
             value={selectedStage}
             onChange={(e) => setSelectedStage(e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-xl border border-white/10 bg-[#050508] text-sm text-slate-300 focus:outline-none focus:border-amber-500/60 cursor-pointer"
+            className="w-full px-3.5 py-2.5 rounded-xl border border-white/10 bg-[#040815] text-sm text-slate-300 focus:outline-none focus:border-pink-500/60 cursor-pointer"
           >
             <option className="bg-[#050508] text-white" value="all">{t.allStages}</option>
             <option className="bg-[#050508] text-white" value="group">{t.groupStage}</option>
@@ -141,7 +141,7 @@ export default function Fixtures({ language, matches }: FixturesProps) {
               onClick={() => setActiveFilter(filter)}
               className={`px-3 py-2 text-xs font-semibold rounded-lg shrink-0 transition-all cursor-pointer ${
                 activeFilter === filter
-                  ? 'bg-white/10 text-amber-500 border border-amber-500/30'
+                  ? 'bg-pink-500/10 text-pink-500 border border-pink-500/30'
                   : 'text-slate-400 hover:text-white bg-white/5 border border-transparent'
               }`}
             >
@@ -194,14 +194,14 @@ export default function Fixtures({ language, matches }: FixturesProps) {
 
                     {match.status === 'completed' && (
                       <span className="flex items-center gap-1 text-slate-500 font-semibold">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-amber-500/80" />
+                        <CheckCircle2 className="h-3.5 w-3.5 text-pink-500/80" />
                         {language === 'my' ? 'ပြီးဆုံး' : 'FT'}
                       </span>
                     )}
 
                     {match.status === 'upcoming' && (
                       <span className="flex items-center gap-1 text-slate-400 font-semibold">
-                        <Clock className="h-3.5 w-3.5 text-amber-500" />
+                        <Clock className="h-3.5 w-3.5 text-pink-500" />
                         {match.time}
                       </span>
                     )}
@@ -227,11 +227,11 @@ export default function Fixtures({ language, matches }: FixturesProps) {
                         </div>
                       ) : (
                         <div className="flex items-center gap-2">
-                          <span className={`font-mono text-2xl font-black ${match.status === 'live' ? 'text-amber-500' : 'text-slate-100'}`}>
+                          <span className={`font-mono text-2xl font-black ${match.status === 'live' ? 'text-pink-500 font-extrabold animate-pulse' : 'text-slate-100'}`}>
                             {match.homeScore}
                           </span>
                           <span className="text-slate-600 font-bold">:</span>
-                          <span className={`font-mono text-2xl font-black ${match.status === 'live' ? 'text-amber-500' : 'text-slate-100'}`}>
+                          <span className={`font-mono text-2xl font-black ${match.status === 'live' ? 'text-pink-500 font-extrabold animate-pulse' : 'text-slate-100'}`}>
                             {match.awayScore}
                           </span>
                         </div>

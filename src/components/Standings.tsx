@@ -53,7 +53,7 @@ export default function Standings({ language, standings }: StandingsProps) {
       {/* Title */}
       <div>
         <h2 className="text-xl md:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <Trophy className="h-5 w-5 text-amber-400 shrink-0" />
+          <Trophy className="h-5 w-5 text-pink-500 shrink-0" />
           {t.groupStandingsTitle}
         </h2>
         <p className="text-slate-400 text-sm mt-1">
@@ -70,8 +70,8 @@ export default function Standings({ language, standings }: StandingsProps) {
             className="rounded-2xl border border-white/10 bg-black/40 p-4 shadow-xl backdrop-blur-sm"
           >
             {/* Group Name Header */}
-            <h3 className="text-sm font-extrabold text-amber-500 uppercase tracking-wider mb-3 pb-2 border-b border-white/5 flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-amber-500"></span>
+            <h3 className="text-sm font-extrabold text-pink-500 uppercase tracking-wider mb-3 pb-2 border-b border-white/5 flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-pink-500"></span>
               {language === 'my' ? group.name.replace('Group', 'အုပ်စု') : group.name}
             </h3>
 
@@ -98,12 +98,12 @@ export default function Standings({ language, standings }: StandingsProps) {
                       <tr
                         key={team.name}
                         className={`hover:bg-white/5 transition-all ${
-                          isQualified ? 'bg-amber-950/10' : ''
+                          isQualified ? 'bg-pink-950/10' : ''
                         }`}
                       >
                         {/* Team Name */}
                         <td className="py-3 pl-2 flex items-center gap-2 text-white">
-                          <span className={`w-1 h-6 shrink-0 rounded-full ${isQualified ? 'bg-amber-500' : 'bg-transparent'}`}></span>
+                          <span className={`w-1 h-6 shrink-0 rounded-full ${isQualified ? 'bg-pink-500' : 'bg-transparent'}`}></span>
                           <span className="text-lg leading-none" role="img" aria-label={team.name}>{team.flag}</span>
                           <span className="font-bold tracking-tight truncate max-w-[110px] sm:max-w-none">
                             {translateTeam(team.name)}
@@ -120,13 +120,13 @@ export default function Standings({ language, standings }: StandingsProps) {
                         
                         {/* GD with indicator colors */}
                         <td className={`py-3 text-center font-mono ${
-                          team.gd > 0 ? 'text-amber-500 font-semibold' : team.gd < 0 ? 'text-red-400' : 'text-slate-400'
+                          team.gd > 0 ? 'text-pink-500 font-semibold' : team.gd < 0 ? 'text-red-400' : 'text-slate-400'
                         }`}>
                           {team.gd > 0 ? `+${team.gd}` : team.gd}
                         </td>
 
                         {/* Points Highlight */}
-                        <td className="py-3 text-right pr-2 text-amber-500 font-bold font-mono text-sm">
+                        <td className="py-3 text-right pr-2 text-pink-500 font-bold font-mono text-sm">
                           {team.pts}
                         </td>
                       </tr>
@@ -141,7 +141,7 @@ export default function Standings({ language, standings }: StandingsProps) {
 
       {/* Info Card at bottom */}
       <div className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/5 p-4 text-xs text-slate-500 leading-relaxed">
-        <Info className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
+        <Info className="h-5 w-5 text-pink-500 shrink-0 mt-0.5" />
         <p>{t.qualificationNote}</p>
       </div>
     </div>

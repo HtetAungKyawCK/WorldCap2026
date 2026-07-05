@@ -103,7 +103,7 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
       {/* Page Title */}
       <div>
         <h2 className="text-xl md:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <History className="h-5 w-5 text-amber-500 shrink-0" />
+          <History className="h-5 w-5 text-pink-500 shrink-0" />
           {t.historyTitle}
         </h2>
         <p className="text-slate-400 text-sm mt-1">
@@ -115,8 +115,8 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
         {/* Interactive H2H Section */}
         <div className="lg:col-span-7 space-y-6">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm shadow-xl">
-            <h3 className="text-sm font-extrabold text-amber-500 uppercase tracking-wider mb-4 flex items-center gap-2">
-              <Sparkles className="h-4.5 w-4.5 text-amber-400" />
+            <h3 className="text-sm font-extrabold text-pink-500 uppercase tracking-wider mb-4 flex items-center gap-2">
+              <Sparkles className="h-4.5 w-4.5 text-pink-500" />
               {t.h2hAnalyzer}
             </h3>
             
@@ -127,7 +127,7 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
               {/* Dropdown Team A */}
               <div className="sm:col-span-5 space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase">{t.teamA}</label>
-                <div className="flex items-center gap-2 bg-[#050508] border border-white/10 rounded-lg px-3 py-1">
+                <div className="flex items-center gap-2 bg-[#040815] border border-white/10 rounded-lg px-3 py-1">
                   <span className="text-lg leading-none">{getTeamFlag(teamA)}</span>
                   <select
                     id="h2h-select-team-a"
@@ -142,7 +142,7 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
                     className="w-full bg-transparent text-sm font-bold text-white focus:outline-none cursor-pointer"
                   >
                     {availableTeams.map(tName => (
-                      <option key={tName} value={tName} className="bg-[#050508] text-white">{translateTeam(tName)}</option>
+                      <option key={tName} value={tName} className="bg-[#040815] text-white">{translateTeam(tName)}</option>
                     ))}
                   </select>
                 </div>
@@ -156,7 +156,7 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
               {/* Dropdown Team B */}
               <div className="sm:col-span-5 space-y-1">
                 <label className="text-[10px] font-bold text-slate-500 uppercase">{t.teamB}</label>
-                <div className="flex items-center gap-2 bg-[#050508] border border-white/10 rounded-lg px-3 py-1">
+                <div className="flex items-center gap-2 bg-[#040815] border border-white/10 rounded-lg px-3 py-1">
                   <span className="text-lg leading-none">{getTeamFlag(teamB)}</span>
                   <select
                     id="h2h-select-team-b"
@@ -171,7 +171,7 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
                     className="w-full bg-transparent text-sm font-bold text-white focus:outline-none cursor-pointer"
                   >
                     {availableTeams.map(tName => (
-                      <option key={tName} value={tName} className="bg-[#050508] text-white">{translateTeam(tName)}</option>
+                      <option key={tName} value={tName} className="bg-[#040815] text-white">{translateTeam(tName)}</option>
                     ))}
                   </select>
                 </div>
@@ -182,7 +182,7 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
             <button
               id="h2h-analyze-btn"
               onClick={handleAnalyze}
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-black font-bold text-sm tracking-wide shadow-lg shadow-amber-500/10 cursor-pointer transition-all duration-200"
+              className="w-full py-3 rounded-xl bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:from-pink-400 hover:to-blue-400 text-white font-bold text-sm tracking-wide shadow-lg shadow-pink-500/10 cursor-pointer transition-all duration-200"
             >
               {t.compareBtn}
             </button>
@@ -192,7 +192,7 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
               <div className="mt-6 pt-5 border-t border-slate-900/80">
                 {!analyzedH2H ? (
                   <div className="flex items-start gap-3 p-4 rounded-xl border border-white/10 bg-black/40 text-xs text-slate-500 leading-relaxed">
-                    <ShieldAlert className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
+                    <ShieldAlert className="h-5 w-5 text-pink-500 shrink-0 mt-0.5" />
                     <p>{t.noH2hData}</p>
                   </div>
                 ) : (
@@ -210,7 +210,7 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
                       </div>
                       <div className="bg-black/60 border border-white/5 rounded-xl p-3 flex flex-col justify-center">
                         <span className="block text-[10px] text-slate-500 uppercase font-semibold">{t.totalPlayed}</span>
-                        <span className="block text-xl font-black text-amber-500 font-mono mt-1">{analyzedH2H.played}</span>
+                        <span className="block text-xl font-black text-pink-500 font-mono mt-1">{analyzedH2H.played}</span>
                         <span className="text-[9px] text-slate-600 font-bold">{analyzedH2H.draws} {t.draws}</span>
                       </div>
                       <div className="bg-black/60 border border-white/5 rounded-xl p-3">
@@ -234,7 +234,7 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
                               <span className="text-slate-600">•</span>
                               <span className="text-[10px]">{translateTeam(meeting.stage)}</span>
                             </span>
-                            <span className="font-mono font-bold text-amber-500 px-3 py-1 bg-[#050508]/60 border border-white/10 rounded-md">
+                            <span className="font-mono font-bold text-pink-500 px-3 py-1 bg-[#040815]/60 border border-white/10 rounded-md">
                               {meeting.score}
                             </span>
                             <span className="font-bold text-slate-300">
@@ -254,8 +254,8 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
         {/* Timeline of Past Champions */}
         <div className="lg:col-span-5 space-y-4">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm shadow-xl">
-            <h3 className="text-sm font-extrabold text-amber-500 uppercase tracking-wider mb-5 flex items-center gap-2">
-              <Trophy className="h-4.5 w-4.5 text-amber-400" />
+            <h3 className="text-sm font-extrabold text-pink-500 uppercase tracking-wider mb-5 flex items-center gap-2">
+              <Trophy className="h-4.5 w-4.5 text-pink-500" />
               {t.pastChampions}
             </h3>
 
@@ -264,14 +264,14 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
               {pastWinnersData.map((winner) => (
                 <div key={winner.year} id={`champion-row-${winner.year}`} className="relative pl-7 group">
                   {/* Bullet */}
-                  <span className="absolute left-1 top-1 w-4 h-4 rounded-full border-2 border-white/10 bg-[#050508] group-hover:border-amber-400 group-hover:bg-amber-500 transition-all flex items-center justify-center">
+                  <span className="absolute left-1 top-1 w-4 h-4 rounded-full border-2 border-white/10 bg-[#040815] group-hover:border-pink-400 group-hover:bg-pink-500 transition-all flex items-center justify-center">
                     <span className="w-1.5 h-1.5 rounded-full bg-transparent"></span>
                   </span>
 
                   {/* Winner Card Info */}
                   <div className="bg-black/40 border border-white/5 p-3 rounded-xl hover:border-white/10 transition-all">
                     <div className="flex items-center justify-between mb-1.5">
-                      <span className="font-mono font-black text-amber-500 text-sm">
+                      <span className="font-mono font-black text-pink-500 text-sm">
                         {winner.year}
                       </span>
                       <span className="text-[10px] text-slate-500 font-semibold uppercase flex items-center gap-1">
@@ -284,7 +284,7 @@ export default function HistoryStats({ language }: HistoryStatsProps) {
                       <span className="text-white font-bold flex items-center gap-1.5">
                         <span className="text-lg leading-none">{winner.championFlag}</span>
                         {translateTeam(winner.champion)}
-                        <span className="text-amber-400 text-[10px]">👑</span>
+                        <span className="text-pink-400 text-[10px]">👑</span>
                       </span>
 
                       {/* Score */}
