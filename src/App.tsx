@@ -154,9 +154,7 @@ export default function App() {
     const saved = localStorage.getItem('wc26_language');
     return (saved as Language) || 'en';
   });
-  const [isPipelineOn, setIsPipelineOn] = useState<boolean>(false); // Default to FALSE so it strictly follows real-world UTC schedule!
   const [matches, setMatches] = useState<Match[]>(() => {
-    // Initialize matches with strict real-world UTC statuses on load
     const now = new Date();
     return matchesData.map(match => getRealTimeMatchStatus(match, now));
   });
@@ -175,117 +173,17 @@ export default function App() {
     localStorage.setItem('wc26_language', language);
   }, [language]);
 
-  // Synchronize matches state based on simulation mode and system clock
+  // Synchronize matches state based on strict real-time clock
   useEffect(() => {
-    if (!isPipelineOn) {
-      // 1. STRICT REAL-TIME MODE (Accurate UTC Schedule)
-      const updateStrictMatches = () => {
-        const now = new Date();
-        setMatches(matchesData.map(match => getRealTimeMatchStatus(match, now)));
-      };
+    const updateStrictMatches = () => {
+      const now = new Date();
+      setMatches(matchesData.map(match => getRealTimeMatchStatus(match, now)));
+    };
 
-      updateStrictMatches();
-      const interval = setInterval(updateStrictMatches, 5000); // Poll and verify schedule every 5s
-      return () => clearInterval(interval);
-    } else {
-      // 2. FORCED DEMO SIMULATION MODE (Keep Brazil vs Norway playing so users can test live stats!)
-      setMatches(prevMatches => {
-        return prevMatches.map(m => {
-          if (m.id === 'live-1') {
-            return {
-              ...m,
-              status: 'live',
-              minute: m.minute || 65,
-              homeScore: m.homeScore || 0,
-              awayScore: m.awayScore || 0,
-              scorers: m.scorers || []
-            };
-          }
-          // Other matches are still computed strictly in real-time
-          return getRealTimeMatchStatus(m, new Date());
-        });
-      });
-
-      const TEAM_SCORERS: Record<string, string[]> = {
-        'Brazil': ['Vinícius Júnior', 'Rodrygo', 'Neymar', 'Raphinha', 'Richarlison', 'Gabriel Martinelli'],
-        'Norway': ['Erling Haaland', 'Martin Ødegaard', 'Alexander Sørloth', 'Antonio Nusa']
-      };
-
-      const interval = setInterval(() => {
-        setMatches(prevMatches => {
-          let alertToSet: any = null;
-          
-          const updated = prevMatches.map(match => {
-            if (match.status === 'live') {
-              const currentMin = (match.minute || 0) + 1;
-              
-              if (currentMin > 90) {
-                return {
-                  ...match,
-                  minute: 90,
-                  status: 'completed' as const
-                };
-              }
-
-              // Simulating random goal (approx ~7% chance per tick)
-              const isGoal = Math.random() < 0.07;
-              let homeScore = match.homeScore || 0;
-              let awayScore = match.awayScore || 0;
-              const scorers = match.scorers ? [...match.scorers] : [];
-
-              if (isGoal) {
-                const isHomeScoring = Math.random() < 0.5;
-                const scoringTeam = isHomeScoring ? match.homeTeam : match.awayTeam;
-                const teamFlag = isHomeScoring ? match.homeFlag : match.awayFlag;
-                const players = TEAM_SCORERS[scoringTeam] || ['Unknown Player'];
-                const randomScorer = players[Math.floor(Math.random() * players.length)];
-
-                if (isHomeScoring) homeScore += 1;
-                else awayScore += 1;
-
-                scorers.push({
-                  name: randomScorer,
-                  time: currentMin,
-                  team: isHomeScoring ? 'home' : 'away'
-                });
-
-                alertToSet = {
-                  homeTeam: match.homeTeam,
-                  awayTeam: match.awayTeam,
-                  scorer: randomScorer,
-                  score: `${homeScore} - ${awayScore}`,
-                  time: currentMin,
-                  teamFlag,
-                  scoringTeam
-                };
-              }
-
-              return {
-                ...match,
-                minute: currentMin,
-                homeScore,
-                awayScore,
-                scorers
-              };
-            }
-            return match;
-          });
-
-          // Trigger goal alert toast
-          if (alertToSet) {
-            setGoalAlert(alertToSet);
-            setTimeout(() => {
-              setGoalAlert(null);
-            }, 4500);
-          }
-
-          return updated;
-        });
-      }, 4000); // Fast ticking for premium live feedback
-
-      return () => clearInterval(interval);
-    }
-  }, [isPipelineOn]);
+    updateStrictMatches();
+    const interval = setInterval(updateStrictMatches, 5000); // Poll and verify schedule every 5s
+    return () => clearInterval(interval);
+  }, []);
 
   // Disable Right-Click and View Source Shortcuts
   useEffect(() => {
@@ -323,10 +221,8 @@ export default function App() {
 
   const t = translations[language];
 
-  // Filter live matches based on pipeline toggle status
-  const liveMatches = isPipelineOn 
-    ? matches.filter(m => m.status === 'live')
-    : [];
+  // Filter live matches based on active statuses
+  const liveMatches = matches.filter(m => m.status === 'live');
 
   return (
     <div id="app-root-container" className="min-h-screen bg-[#040815] font-sans text-slate-100 flex flex-col selection:bg-pink-500 selection:text-white">
@@ -392,8 +288,6 @@ export default function App() {
               <LiveStream 
                 language={language} 
                 liveMatches={liveMatches}
-                isPipelineOn={isPipelineOn}
-                setIsPipelineOn={setIsPipelineOn}
               />
             )}
 

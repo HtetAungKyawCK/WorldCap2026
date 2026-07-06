@@ -3,18 +3,16 @@ import { Language, Match } from '../types';
 import { translations } from '../data/translations';
 import { matchesData } from '../data/tournamentData';
 import { 
-  Calendar, MapPin, Clock, AlertCircle, Info, Tv, ExternalLink, Activity, Wifi, WifiOff
+  Calendar, MapPin, Clock, AlertCircle, Info, Tv, ExternalLink, Activity
 } from 'lucide-react';
 import Flag from './Flag';
 
 interface LiveStreamProps {
   language: Language;
   liveMatches: Match[];
-  isPipelineOn: boolean;
-  setIsPipelineOn: (on: boolean) => void;
 }
 
-export default function LiveStream({ language, liveMatches, isPipelineOn, setIsPipelineOn }: LiveStreamProps) {
+export default function LiveStream({ language, liveMatches }: LiveStreamProps) {
   const t = translations[language];
   
   // Find the next upcoming match dynamically from the tournament data
@@ -64,11 +62,11 @@ export default function LiveStream({ language, liveMatches, isPipelineOn, setIsP
   return (
     <div id="live-stream-section" className="space-y-6 max-w-4xl mx-auto">
       
-      {/* Header Banner with Real-time Data Stream Indicator & Switch */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 bg-gradient-to-r from-pink-500/10 via-blue-500/5 to-[#050b1d] border border-white/10 rounded-2xl p-5 md:p-6 shadow-xl">
+      {/* Header Banner with Real-time Data Stream Indicator */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-5 bg-gradient-to-r from-pink-500/10 via-blue-500/5 to-[#050b1d] border border-white/10 rounded-2xl p-5 md:p-6 shadow-xl">
         <div className="space-y-1.5">
           <h2 className="text-xl md:text-2xl font-bold tracking-tight text-white flex items-center gap-2.5">
-            <span className={`flex h-3 w-3 rounded-full ${isPipelineOn ? 'bg-pink-500 animate-pulse' : 'bg-slate-600'}`}></span>
+            <span className="flex h-3 w-3 rounded-full bg-pink-500 animate-pulse"></span>
             {language === 'my' ? 'တိုက်ရိုက်ပွဲစဉ်များ (Live Stream)' : 'Live Tournament Matches'}
           </h2>
           <p className="text-slate-400 text-xs md:text-sm leading-relaxed">
@@ -79,54 +77,14 @@ export default function LiveStream({ language, liveMatches, isPipelineOn, setIsP
           
           {/* Status badge with auto-ticker description */}
           <div className="flex flex-wrap items-center gap-2 pt-1">
-            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${
-              isPipelineOn 
-                ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
-                : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
-            }`}>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               <Activity className="h-3 w-3 animate-pulse" />
-              {isPipelineOn 
-                ? (language === 'my' ? 'Live Stream: ချိတ်ဆက်ထားသည် (Auto Update)' : 'Live Stream: Connected (Auto-Updating)')
-                : (language === 'my' ? 'Live Stream: ပိတ်ထားသည်' : 'Live Stream: Paused')
-              }
+              {language === 'my' ? 'Live Stream: ချိတ်ဆက်ထားသည် (Auto Update)' : 'Live Stream: Connected (Auto-Updating)'}
             </span>
             <span className="text-[10px] text-slate-500 font-mono font-medium">
-              {isPipelineOn 
-                ? (language === 'my' ? '⏱️ စက္ကန့်တိုင်း အလိုအလျောက် ဂိုးနှင့် မိနစ်များ ပြောင်းလဲနေပါမည်' : '⏱️ Minutes & goals are updated in real-time every 4 seconds')
-                : (language === 'my' ? '⏱️ တိုက်ရိုက်စနစ်ကို ပိတ်ထားသောကြောင့် လာမည့်ပွဲစဉ်များကိုသာ ပြသနေမည်' : '⏱️ Stream paused. Switch on to simulate active games')
-              }
+              ⏱️ {language === 'my' ? 'စက္ကန့်တိုင်း အလိုအလျောက် ဂိုးနှင့် မိနစ်များ ပြောင်းလဲနေပါမည်' : 'Minutes & goals are updated in real-time automatically'}
             </span>
           </div>
-        </div>
-
-        {/* Dynamic active pipeline control toggler with state description */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
-          <div className="text-right hidden sm:block">
-            <div className="text-[11px] font-black text-slate-400 uppercase tracking-wider">
-              {language === 'my' ? 'တိုက်ရိုက်ပွဲစဉ် စမ်းသပ်မှု' : 'Live Stream Control'}
-            </div>
-            <div className="text-[10px] text-slate-500 font-semibold">
-              {isPipelineOn 
-                ? (language === 'my' ? 'လက်ရှိ Lives ရှိနေသည်' : 'Showing active games') 
-                : (language === 'my' ? 'Lives မရှိသည့် အခြေအနေ' : 'Testing empty state')}
-            </div>
-          </div>
-          
-          <button
-            onClick={() => setIsPipelineOn(!isPipelineOn)}
-            className={`flex items-center justify-center gap-2 px-5 py-3 rounded-xl border text-xs font-black transition-all cursor-pointer ${
-              isPipelineOn 
-                ? 'bg-pink-500 hover:bg-pink-600 text-white border-transparent shadow-lg shadow-pink-500/20' 
-                : 'bg-white/5 border-white/10 text-slate-300 hover:bg-white/10 hover:text-white'
-            }`}
-          >
-            {isPipelineOn ? <Wifi className="h-4 w-4" /> : <WifiOff className="h-4 w-4" />}
-            <span>
-              {isPipelineOn 
-                ? (language === 'my' ? 'Live ပိတ်ရန် (စမ်းသပ်ရန်)' : 'Turn Live Off (Test Empty)') 
-                : (language === 'my' ? 'Live ဖွင့်ရန် (တိုက်ရိုက်ပြရန်)' : 'Turn Live On (Show Active)')}
-            </span>
-          </button>
         </div>
       </div>
 
