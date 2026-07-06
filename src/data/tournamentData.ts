@@ -1,59 +1,93 @@
 import { Match, GroupStanding, WorldCupWinner, HistoricalMatchup } from '../types';
 
 export const matchesData: Match[] = [
-  // --- LIVE MATCHES TODAY (JULY 5, 2026) ---
+  // --- LIVE MATCHES TODAY (JULY 5-6, 2026) ---
   {
     id: 'live-1',
     homeTeam: 'Brazil',
     awayTeam: 'Norway',
     homeFlag: '🇧🇷',
     awayFlag: '🇳🇴',
-    homeScore: 0,
-    awayScore: 0,
+    homeScore: 1,
+    awayScore: 2,
     date: '2026-07-06',
     time: '03:00',
     stage: 'round_16',
-    status: 'live',
+    status: 'completed',
     stadium: 'Rose Bowl',
     city: 'Pasadena',
-    minute: 45,
-    scorers: []
+    minute: 90,
+    scorers: [
+      { name: 'Vinícius Júnior', time: 15, team: 'home' },
+      { name: 'Erling Haaland', time: 42, team: 'away' },
+      { name: 'Martin Ødegaard', time: 78, team: 'away' }
+    ]
   },
   {
     id: 'live-2',
-    homeTeam: 'England',
-    awayTeam: 'France',
-    homeFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
-    awayFlag: '🇫🇷',
-    homeScore: 1,
-    awayScore: 1,
-    date: '2026-07-05',
-    time: '18:00',
-    stage: 'round_16',
-    status: 'live',
-    stadium: 'SoFi Stadium',
-    city: 'Los Angeles',
-    minute: 72,
-    scorers: [
-      { name: 'Harry Kane', time: 34, team: 'home' },
-      { name: 'Kylian Mbappé', time: 52, team: 'away' }
-    ]
-  },
-
-  // --- UPCOMING MATCHES ---
-  {
-    id: 'up-0',
     homeTeam: 'Mexico',
     awayTeam: 'England',
     homeFlag: '🇲🇽',
     awayFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    homeScore: 2,
+    awayScore: 3,
     date: '2026-07-06',
     time: '07:00',
     stage: 'round_16',
-    status: 'upcoming',
+    status: 'completed',
     stadium: 'MetLife Stadium',
-    city: 'East Rutherford'
+    city: 'East Rutherford',
+    minute: 90,
+    scorers: [
+      { name: 'Santiago Giménez', time: 12, team: 'home' },
+      { name: 'Harry Kane', time: 28, team: 'away' },
+      { name: 'Jude Bellingham', time: 55, team: 'away' },
+      { name: 'Hirving Lozano', time: 64, team: 'home' },
+      { name: 'Bukayo Saka', time: 81, team: 'away' }
+    ]
   },
+  {
+    id: 'live-3',
+    homeTeam: 'Canada',
+    awayTeam: 'Morocco',
+    homeFlag: '🇨🇦',
+    awayFlag: '🇲🇦',
+    homeScore: 0,
+    awayScore: 3,
+    date: '2026-07-05',
+    time: '15:00',
+    stage: 'round_16',
+    status: 'completed',
+    stadium: 'BMO Field',
+    city: 'Toronto',
+    minute: 90,
+    scorers: [
+      { name: 'Youssef En-Nesyri', time: 22, team: 'away' },
+      { name: 'Hakim Ziyech', time: 47, team: 'away' },
+      { name: 'Achraf Hakimi', time: 74, team: 'away' }
+    ]
+  },
+  {
+    id: 'live-4',
+    homeTeam: 'Paraguay',
+    awayTeam: 'France',
+    homeFlag: '🇵🇾',
+    awayFlag: '🇫🇷',
+    homeScore: 0,
+    awayScore: 1,
+    date: '2026-07-05',
+    time: '18:00',
+    stage: 'round_16',
+    status: 'completed',
+    stadium: 'SoFi Stadium',
+    city: 'Los Angeles',
+    minute: 90,
+    scorers: [
+      { name: 'Kylian Mbappé', time: 61, team: 'away' }
+    ]
+  },
+
+  // --- UPCOMING MATCHES ---
   {
     id: 'up-1',
     homeTeam: 'Portugal',
@@ -82,9 +116,9 @@ export const matchesData: Match[] = [
   },
   {
     id: 'up-3',
-    homeTeam: 'Spain',
-    awayTeam: 'Winner R16 Match 5',
-    homeFlag: '🇪🇸',
+    homeTeam: 'Winner R16 Match 3',
+    awayTeam: 'Winner R16 Match 4',
+    homeFlag: '🏳️',
     awayFlag: '🏳️',
     date: '2026-07-10',
     time: '19:00',

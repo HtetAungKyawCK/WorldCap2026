@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Language, GroupStanding } from '../types';
+import { Language, GroupStanding, Match } from '../types';
 import { translations } from '../data/translations';
 import { Trophy, Shield, Info, GitMerge, LayoutGrid } from 'lucide-react';
 import TournamentTree from './TournamentTree';
@@ -8,9 +8,10 @@ import Flag from './Flag';
 interface StandingsProps {
   language: Language;
   standings: GroupStanding[];
+  matches: Match[];
 }
 
-export default function Standings({ language, standings }: StandingsProps) {
+export default function Standings({ language, standings, matches }: StandingsProps) {
   const t = translations[language];
   const [viewMode, setViewMode] = useState<'tree' | 'groups'>('tree'); // Default to the beautiful Tree structure requested by user!
 
@@ -47,7 +48,9 @@ export default function Standings({ language, standings }: StandingsProps) {
       'Serbia': 'ဆားဘီးယား',
       'Ghana': 'ဂါနာ',
       'Portugal': 'ပေါ်တူဂီ',
-      'Uruguay': 'ဥရုဂွေး'
+      'Uruguay': 'ဥရုဂွေး',
+      'Norway': 'နော်ဝေ',
+      'Paraguay': 'ပါရာဂွေး'
     };
     return map[teamName] || teamName;
   };
@@ -102,7 +105,7 @@ export default function Standings({ language, standings }: StandingsProps) {
 
       {/* View Content conditional rendering */}
       {viewMode === 'tree' ? (
-        <TournamentTree language={language} />
+        <TournamentTree language={language} matches={matches} />
       ) : (
         <>
           {/* Grid of groups */}

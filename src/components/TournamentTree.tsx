@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Language } from '../types';
+import { Language, Match } from '../types';
 import { motion } from 'motion/react';
 import { Trophy, ArrowRight, Sparkles, Star } from 'lucide-react';
 import Flag from './Flag';
 
 interface TournamentTreeProps {
   language: Language;
+  matches: Match[];
 }
 
-export default function TournamentTree({ language }: TournamentTreeProps) {
+export default function TournamentTree({ language, matches }: TournamentTreeProps) {
   const [hoveredTeam, setHoveredTeam] = useState<string | null>(null);
 
   // Translation helpers
@@ -18,6 +19,7 @@ export default function TournamentTree({ language }: TournamentTreeProps) {
       'England': 'အင်္ဂလန်',
       'France': 'ပြင်သစ်',
       'Brazil': 'ဘရာဇီး',
+      'Norway': 'နော်ဝေ',
       'United States': 'ယူနိုက်တက်စတိတ်',
       'Portugal': 'ပေါ်တူဂီ',
       'Netherlands': 'နယ်သာလန်',
@@ -25,8 +27,14 @@ export default function TournamentTree({ language }: TournamentTreeProps) {
       'Germany': 'ဂျာမနီ',
       'Spain': 'စပိန်',
       'Japan': 'ဂျပန်',
+      'Mexico': 'မက္ကဆီကို',
+      'Paraguay': 'ပါရာဂွေး',
+      'Canada': 'ကနေဒါ',
+      'Morocco': 'မော်ရိုကို',
       'Winner R16 Match 1': 'Match 1 အနိုင်ရသူ',
       'Winner R16 Match 2': 'Match 2 အနိုင်ရသူ',
+      'Winner R16 Match 3': 'Match 3 အနိုင်ရသူ',
+      'Winner R16 Match 4': 'Match 4 အနိုင်ရသူ',
       'Winner R16 Match 5': 'Match 5 အနိုင်ရသူ',
       'Semifinalist 1': 'ဆီမီးဖိုင်နယ်ဝင် ၁',
       'Semifinalist 2': 'ဆီမီးဖိုင်နယ်ဝင် ၂',
@@ -39,60 +47,182 @@ export default function TournamentTree({ language }: TournamentTreeProps) {
     return map[teamName] || teamName;
   };
 
-  // Bracket data nodes
+  // Helper to determine the winner of a match by ID
+  const getMatchWinnerObj = (matchId: string): { name: string; flag: string } | null => {
+    const match = matches.find(m => m.id === matchId);
+    if (!match) return null;
+    if (match.status !== 'completed') return null;
+    
+    const homeScore = match.homeScore || 0;
+    const awayScore = match.awayScore || 0;
+    
+    if (homeScore > awayScore) {
+      return { name: match.homeTeam, flag: match.homeFlag };
+    } else if (awayScore > homeScore) {
+      return { name: match.awayTeam, flag: match.awayFlag };
+    } else {
+      return { name: match.homeTeam, flag: match.homeFlag };
+    }
+  };
+
+  // Helper to resolve team name and flag (handling placeholders dynamically!)
+  const resolveTeam = (teamName: string, defaultFlag: string): { name: string; flag: string } => {
+    if (teamName === 'Winner R16 Match 1') {
+      const winner = getMatchWinnerObj('live-2'); // Winner of Mexico vs England
+      return winner || { name: teamName, flag: defaultFlag };
+    }
+    if (teamName === 'Winner R16 Match 2') {
+      const winner = getMatchWinnerObj('live-4'); // Winner of Paraguay vs France
+      return winner || { name: teamName, flag: defaultFlag };
+    }
+    if (teamName === 'Winner R16 Match 3') {
+      const winner = getMatchWinnerObj('live-1'); // Winner of Brazil vs Norway
+      return winner || { name: teamName, flag: defaultFlag };
+    }
+    if (teamName === 'Winner R16 Match 4') {
+      const winner = getMatchWinnerObj('live-3'); // Winner of Canada vs Morocco
+      return winner || { name: teamName, flag: defaultFlag };
+    }
+    if (teamName === 'Winner R16 Match 5') {
+      const winner = getMatchWinnerObj('up-1'); // Winner of Portugal vs Netherlands
+      return winner || { name: teamName, flag: defaultFlag };
+    }
+    if (teamName === 'Semifinalist 1') {
+      const winner = getMatchWinnerObj('up-4'); // Winner of QF1
+      return winner || { name: teamName, flag: defaultFlag };
+    }
+    if (teamName === 'Semifinalist 2') {
+      const winner = getMatchWinnerObj('up-3'); // Winner of QF2
+      return winner || { name: teamName, flag: defaultFlag };
+    }
+    if (teamName === 'Finalist 1') {
+      const winner = getMatchWinnerObj('up-5'); // Winner of SF1
+      return winner || { name: teamName, flag: defaultFlag };
+    }
+    if (teamName === 'Finalist 2') {
+      const winner = getMatchWinnerObj('up-6'); // Winner of SF2
+      return winner || { name: teamName, flag: defaultFlag };
+    }
+    return { name: teamName, flag: defaultFlag };
+  };
+
+  const getTreeMatch = (matchId: string, fallback: {
+    id: string;
+    home: string;
+    homeFlag: string;
+    homeScore: string;
+    away: string;
+    awayFlag: string;
+    awayScore: string;
+    status: string;
+    isLive: boolean;
+    time: string;
+  }) => {
+    const matchObj = matches.find(m => m.id === matchId);
+    if (!matchObj) return fallback;
+
+    const isLive = matchObj.status === 'live';
+    const isCompleted = matchObj.status === 'completed';
+    
+    let statusText = '';
+    if (isLive) {
+      statusText = language === 'my' 
+        ? `တိုက်ရိုက် ${matchObj.minute}'` 
+        : `Live ${matchObj.minute}'`;
+    } else if (isCompleted) {
+      statusText = language === 'my' ? 'ပြီးဆုံး' : 'Completed';
+    } else {
+      statusText = language === 'my' ? 'လာမည့်ပွဲ' : 'Upcoming';
+    }
+
+    let timeText = '';
+    if (isLive) {
+      timeText = language === 'my' ? 'ယနေ့ တိုက်ရိုက်' : 'Live Today';
+    } else {
+      if (matchObj.date === '2026-07-06' || matchObj.date === '2026-07-05') {
+        timeText = language === 'my' ? `ယနေ့ ${matchObj.time}` : `Today ${matchObj.time}`;
+      } else {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const parts = matchObj.date.split('-');
+        const monthNum = parseInt(parts[1], 10) - 1;
+        const day = parseInt(parts[2], 10);
+        const monthName = months[monthNum] || 'Jul';
+        timeText = `${monthName} ${day} ${matchObj.time}`;
+      }
+    }
+
+    // Resolve placeholders dynamically
+    const resolvedHome = resolveTeam(matchObj.homeTeam, matchObj.homeFlag || '🏳️');
+    const resolvedAway = resolveTeam(matchObj.awayTeam, matchObj.awayFlag || '🏳️');
+
+    return {
+      id: matchObj.id,
+      home: resolvedHome.name,
+      homeFlag: resolvedHome.flag,
+      homeScore: matchObj.homeScore !== undefined ? String(matchObj.homeScore) : '-',
+      away: resolvedAway.name,
+      awayFlag: resolvedAway.flag,
+      awayScore: matchObj.awayScore !== undefined ? String(matchObj.awayScore) : '-',
+      status: statusText,
+      isLive,
+      time: timeText
+    };
+  };
+
+  // Bracket data nodes (dynamically synchronized)
   const roundOf16Matches = [
-    {
+    getTreeMatch('live-2', {
       id: 'r16-1',
-      home: 'England',
-      homeFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
-      homeScore: '1',
+      home: 'Mexico',
+      homeFlag: '🇲🇽',
+      homeScore: '2',
+      away: 'England',
+      awayFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+      awayScore: '3',
+      status: 'Completed',
+      isLive: false,
+      time: 'Today 07:00'
+    }),
+    getTreeMatch('live-4', {
+      id: 'r16-2',
+      home: 'Paraguay',
+      homeFlag: '🇵🇾',
+      homeScore: '0',
       away: 'France',
       awayFlag: '🇫🇷',
       awayScore: '1',
-      status: 'Live 72\'',
-      isLive: true,
-      time: 'Today 18:00'
-    },
-    {
-      id: 'r16-2',
+      status: 'Completed',
+      isLive: false,
+      time: 'Yesterday 18:00'
+    }),
+    getTreeMatch('live-1', {
+      id: 'r16-3',
       home: 'Brazil',
       homeFlag: '🇧🇷',
-      homeScore: '2',
-      away: 'United States',
-      awayFlag: '🇺🇸',
-      awayScore: '1',
-      status: 'Live 24\'',
-      isLive: true,
-      time: 'Today 21:00'
-    },
-    {
-      id: 'r16-3',
-      home: 'Portugal',
-      homeFlag: '🇵🇹',
-      homeScore: '-',
-      away: 'Netherlands',
-      awayFlag: '🇳🇱',
-      awayScore: '-',
-      status: 'Upcoming',
+      homeScore: '1',
+      away: 'Norway',
+      awayFlag: '🇳🇴',
+      awayScore: '2',
+      status: 'Completed',
       isLive: false,
-      time: 'Jul 6 18:00'
-    },
-    {
+      time: 'Today 03:00'
+    }),
+    getTreeMatch('live-3', {
       id: 'r16-4',
-      home: 'Argentina',
-      homeFlag: '🇦🇷',
-      homeScore: '-',
-      away: 'Germany',
-      awayFlag: '🇩🇪',
-      awayScore: '-',
-      status: 'Upcoming',
+      home: 'Canada',
+      homeFlag: '🇨🇦',
+      homeScore: '0',
+      away: 'Morocco',
+      awayFlag: '🇲🇦',
+      awayScore: '3',
+      status: 'Completed',
       isLive: false,
-      time: 'Jul 7 17:00'
-    }
+      time: 'Yesterday 15:00'
+    })
   ];
 
   const quarterfinalsMatches = [
-    {
+    getTreeMatch('up-4', {
       id: 'qf-1',
       home: 'Winner R16 Match 1',
       homeFlag: '🏳️',
@@ -101,23 +231,25 @@ export default function TournamentTree({ language }: TournamentTreeProps) {
       awayFlag: '🏳️',
       awayScore: '-',
       status: 'Upcoming',
+      isLive: false,
       time: 'Jul 11 18:00'
-    },
-    {
+    }),
+    getTreeMatch('up-3', {
       id: 'qf-2',
-      home: 'Spain',
-      homeFlag: '🇪🇸',
+      home: 'Winner R16 Match 3',
+      homeFlag: '🏳️',
       homeScore: '-',
-      away: 'Winner R16 Match 5',
+      away: 'Winner R16 Match 4',
       awayFlag: '🏳️',
       awayScore: '-',
       status: 'Upcoming',
+      isLive: false,
       time: 'Jul 10 19:00'
-    }
+    })
   ];
 
   const semifinalsMatches = [
-    {
+    getTreeMatch('up-5', {
       id: 'sf-1',
       home: 'Semifinalist 1',
       homeFlag: '🏳️',
@@ -126,9 +258,10 @@ export default function TournamentTree({ language }: TournamentTreeProps) {
       awayFlag: '🏳️',
       awayScore: '-',
       status: 'Upcoming',
+      isLive: false,
       time: 'Jul 14 20:00'
-    },
-    {
+    }),
+    getTreeMatch('up-6', {
       id: 'sf-2',
       home: 'Semifinalist 3',
       homeFlag: '🏳️',
@@ -137,11 +270,12 @@ export default function TournamentTree({ language }: TournamentTreeProps) {
       awayFlag: '🏳️',
       awayScore: '-',
       status: 'Upcoming',
+      isLive: false,
       time: 'Jul 15 20:00'
-    }
+    })
   ];
 
-  const finalMatch = {
+  const finalMatch = getTreeMatch('up-8', {
     id: 'final-1',
     home: 'Finalist 1',
     homeFlag: '🏳️',
@@ -150,8 +284,9 @@ export default function TournamentTree({ language }: TournamentTreeProps) {
     awayFlag: '🏳️',
     awayScore: '-',
     status: 'Upcoming',
+    isLive: false,
     time: 'Jul 19 18:00'
-  };
+  });
 
   const isHighlighted = (team: string) => {
     if (!hoveredTeam) return false;
@@ -457,7 +592,20 @@ export default function TournamentTree({ language }: TournamentTreeProps) {
                 <span>{language === 'my' ? '၂၀၂၆ ချန်ပီယံ' : '2026 Champion'}</span>
                 <Star className="h-3 w-3 fill-pink-500 text-pink-500" />
               </div>
-              <span className="text-xs font-bold text-slate-400 mt-1">TBD</span>
+              {(() => {
+                const champ = getMatchWinnerObj('up-8');
+                if (champ) {
+                  return (
+                    <span className="text-xs font-black text-yellow-400 mt-1 flex items-center gap-1.5 animate-pulse">
+                      <Flag country={champ.name} emoji={champ.flag} size="sm" />
+                      {translateTeam(champ.name)}
+                    </span>
+                  );
+                }
+                return (
+                  <span className="text-xs font-bold text-slate-400 mt-1">TBD</span>
+                );
+              })()}
             </motion.div>
           </div>
 
